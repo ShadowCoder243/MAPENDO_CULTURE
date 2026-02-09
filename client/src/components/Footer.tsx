@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, MessageCircle } from "lucide-react";
 
 export function Footer() {
   return (
@@ -10,42 +10,42 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-2xl font-display font-bold text-white">MAPEND'O</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Promoting and celebrating the performing arts in the Democratic Republic of Congo. A hub for creativity, expression, and cultural heritage.
+              Promouvoir et célébrer les arts de la scène en République Démocratique du Congo. Un carrefour pour la créativité, l'expression et le patrimoine culturel.
             </p>
             <div className="flex space-x-4 pt-2">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter size={20} /></a>
+              <a href="https://facebook.com/mapendoculture" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" title="Facebook @mapendo culture"><Facebook size={20} /></a>
+              <a href="https://instagram.com/mapendoculture" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" title="Instagram @mapendo culture"><Instagram size={20} /></a>
+              <a href="https://wa.me/243858939850" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" title="WhatsApp +243 858 939 850"><MessageCircle size={20} /></a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-6 text-white">Quick Links</h4>
+            <h4 className="font-display text-lg font-semibold mb-6 text-white">Liens Rapides</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/events" className="hover:text-primary transition-colors">Events Schedule</Link></li>
-              <li><Link href="/projects" className="hover:text-primary transition-colors">Our Projects</Link></li>
-              <li><Link href="/training" className="hover:text-primary transition-colors">Workshops</Link></li>
+              <li><Link href="/about" className="hover:text-primary transition-colors">À propos</Link></li>
+              <li><Link href="/events" className="hover:text-primary transition-colors">Calendrier des événements</Link></li>
+              <li><Link href="/projects" className="hover:text-primary transition-colors">Nos Projets</Link></li>
+              <li><Link href="/training" className="hover:text-primary transition-colors">Ateliers</Link></li>
               <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>
           </div>
 
           {/* Domains */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-6 text-white">Our Arts</h4>
+            <h4 className="font-display text-lg font-semibold mb-6 text-white">Nos Arts</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>Theater</li>
-              <li>Contemporary Dance</li>
-              <li>Music & Concerts</li>
-              <li>Storytelling (Conte)</li>
-              <li>Cinema & Projection</li>
+              <li>Théâtre</li>
+              <li>Danse Contemporaine</li>
+              <li>Musique & Concerts</li>
+              <li>Conte</li>
+              <li>Cinéma & Projection</li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-6 text-white">Get in Touch</h4>
+            <h4 className="font-display text-lg font-semibold mb-6 text-white">Contactez-nous</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li className="flex items-start">
                 <MapPin size={18} className="mr-3 mt-0.5 text-primary" />
@@ -53,7 +53,11 @@ export function Footer() {
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-3 text-primary" />
-                <span>+243 999 123 456</span>
+                <a href="tel:+243858939850" className="hover:text-primary transition-colors">+243 858 939 850</a>
+              </li>
+              <li className="flex items-center">
+                <MessageCircle size={18} className="mr-3 text-primary" />
+                <a href="https://wa.me/243858939850" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a>
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-3 text-primary" />
@@ -64,10 +68,10 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Mapend'o Culture. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Mapend'o Culture. Tous droits réservés.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-white">Politique de confidentialité</Link>
+            <Link href="/terms" className="hover:text-white">Conditions d'utilisation</Link>
             <Link href="/admin" className="hover:text-white">Admin</Link>
           </div>
         </div>

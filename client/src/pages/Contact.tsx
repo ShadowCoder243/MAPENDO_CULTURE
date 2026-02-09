@@ -7,10 +7,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertContactMessageSchema, type InsertContactMessage } from "@shared/schema";
+import { z } from "zod";
+
+const insertContactMessageSchema = z.object({
+  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+  email: z.string().email("E-mail invalide"),
+  subject: z.string().min(5, "Le sujet doit contenir au moins 5 caractères"),
+  message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
+  type: z.string(),
+});
+
+type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useCreateContactMessage } from "@/hooks/use-contact";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 
 export default function Contact() {
   const { mutate, isPending } = useCreateContactMessage();
@@ -21,7 +31,7 @@ export default function Contact() {
       email: "",
       subject: "",
       message: "",
-      type: "General",
+      type: "Général",
     },
   });
 
@@ -40,10 +50,10 @@ export default function Contact() {
             
             {/* Info Side */}
             <div>
-                <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">Let's Connect</h1>
+                <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">Connectons-nous</h1>
                 <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-                    Have a project in mind, interested in a partnership, or just want to say hello? 
-                    We are always open to discussing new opportunities.
+                    Vous avez un projet en tête, vous êtes intéressé par un partenariat ou vous voulez simplement nous dire bonjour ? 
+                    Nous sommes toujours ouverts à discuter de nouvelles opportunités.
                 </p>
 
                 <div className="space-y-8">
@@ -52,8 +62,8 @@ export default function Contact() {
                             <MapPin className="text-primary w-6 h-6" />
                         </div>
                         <div>
-                            <h4 className="font-bold text-lg mb-1">Our Location</h4>
-                            <p className="text-muted-foreground">123 Art Avenue, Goma, North Kivu, DRC</p>
+                            <h4 className="font-bold text-lg mb-1">Notre Emplacement</h4>
+                            <p className="text-muted-foreground">123 Art Avenue, Goma, Nord-Kivu, RDC</p>
                         </div>
                     </div>
                     
@@ -62,7 +72,7 @@ export default function Contact() {
                             <Mail className="text-primary w-6 h-6" />
                         </div>
                         <div>
-                            <h4 className="font-bold text-lg mb-1">Email Us</h4>
+                            <h4 className="font-bold text-lg mb-1">E-mail</h4>
                             <p className="text-muted-foreground">contact@mapendo-culture.org</p>
                             <p className="text-muted-foreground">press@mapendo-culture.org</p>
                         </div>
@@ -73,8 +83,18 @@ export default function Contact() {
                             <Phone className="text-primary w-6 h-6" />
                         </div>
                         <div>
-                            <h4 className="font-bold text-lg mb-1">Call Us</h4>
-                            <p className="text-muted-foreground">+243 999 123 456</p>
+                            <h4 className="font-bold text-lg mb-1">Téléphone</h4>
+                            <p className="text-muted-foreground"><a href="tel:+243858939850" className="hover:text-primary transition-colors">+243 858 939 850</a></p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-start">
+                         <div className="bg-primary/10 p-3 rounded-full mr-4">
+                            <MessageCircle className="text-primary w-6 h-6" />
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-lg mb-1">WhatsApp</h4>
+                            <p className="text-muted-foreground"><a href="https://wa.me/243858939850" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Discutez avec nous sur WhatsApp</a></p>
                         </div>
                     </div>
                 </div>
@@ -90,8 +110,8 @@ export default function Contact() {
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Name</FormLabel>
-                                        <FormControl><Input placeholder="John Doe" {...field} /></FormControl>
+                                        <FormLabel>Nom</FormLabel>
+                                        <FormControl><Input placeholder="Votre nom" {...field} /></FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -101,8 +121,8 @@ export default function Contact() {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl><Input placeholder="john@example.com" {...field} /></FormControl>
+                                        <FormLabel>E-mail</FormLabel>
+                                        <FormControl><Input placeholder="votre@email.com" {...field} /></FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -115,18 +135,18 @@ export default function Contact() {
                                 name="type"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Inquiry Type</FormLabel>
+                                        <FormLabel>Type de demande</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select type" />
+                                                    <SelectValue placeholder="Sélectionnez le type" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value="General">General Inquiry</SelectItem>
-                                                <SelectItem value="Partnership">Partnership</SelectItem>
-                                                <SelectItem value="Press">Press & Media</SelectItem>
-                                                <SelectItem value="Booking">Artist Booking</SelectItem>
+                                                <SelectItem value="Général">Demande générale</SelectItem>
+                                                <SelectItem value="Partenariat">Partenariat</SelectItem>
+                                                <SelectItem value="Presse">Presse & Médias</SelectItem>
+                                                <SelectItem value="Booking">Réservation d'artistes</SelectItem>
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />
@@ -138,8 +158,8 @@ export default function Contact() {
                                 name="subject"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Subject</FormLabel>
-                                        <FormControl><Input placeholder="What is this regarding?" {...field} /></FormControl>
+                                        <FormLabel>Sujet</FormLabel>
+                                        <FormControl><Input placeholder="De quoi s'agit-il ?" {...field} /></FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -152,14 +172,14 @@ export default function Contact() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Message</FormLabel>
-                                    <FormControl><Textarea placeholder="Tell us more..." className="min-h-[150px]" {...field} /></FormControl>
+                                    <FormControl><Textarea placeholder="Dites-nous en plus..." className="min-h-[150px]" {...field} /></FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
 
                         <Button type="submit" size="lg" className="w-full font-bold" disabled={isPending}>
-                            {isPending ? "Sending..." : "Send Message"}
+                            {isPending ? "Envoi en cours..." : "Envoyer le message"}
                         </Button>
                     </form>
                 </Form>

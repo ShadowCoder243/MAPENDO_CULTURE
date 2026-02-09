@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { useEvents } from "@/hooks/use-events";
 import { useProjects } from "@/hooks/use-projects";
 import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import { getRandomImage, getImageUrl } from "@/lib/images";
 
 export default function Home() {
@@ -41,22 +42,22 @@ export default function Home() {
             className="max-w-4xl"
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-              Celebrating the <span className="text-primary italic">Soul</span> of <br/>
-              Congolese Arts
+              Célébrer l'<span className="text-primary italic">Âme</span> des <br/>
+              Arts Congolais
             </h1>
             <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl leading-relaxed">
-              MAPEND’O CULTURE is the premier platform for performing arts in DRC. 
-              We bridge tradition and modernity through theater, dance, music, and cinema.
+              MAPEND’O CULTURE est la première plateforme des arts de la scène en RDC. 
+              Nous faisons le pont entre tradition et modernité à travers le théâtre, la danse, la musique et le cinéma.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Link href="/events">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-full">
-                  Upcoming Events
+                  Événements à venir
                 </Button>
               </Link>
               <Link href="/about">
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg rounded-full bg-transparent">
-                  Discover Our Story
+                  Découvrir notre histoire
                 </Button>
               </Link>
             </div>
@@ -84,30 +85,33 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-primary font-bold uppercase tracking-widest text-sm mb-4">Who We Are</h4>
+              <h4 className="text-primary font-bold uppercase tracking-widest text-sm mb-4">Qui sommes-nous</h4>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
-                A Hub for Creativity & <br/>Cultural Heritage
+                Une volonté de création, de transmission et de valorisation culturelle
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Mapend'o Culture stands at the intersection of artistic excellence and community development. 
-                We believe in the power of art to tell stories, heal communities, and inspire the next generation 
-                of Congolese artists.
+                MAPEND’O CULTURE est une structure artistique et culturelle congolaise fondée en 2013 par Maguy Kalomba. 
+                Nous sommes un acteur engagé dans le développement des arts vivants et de l’industrie culturelle congolaise, 
+                conçevant des projets qui privilégient la qualité et l’innovation.
               </p>
-              <ul className="space-y-4 mb-8">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 {[
-                  "Promoting local talent on international stages",
-                  "Preserving traditional storytelling and dance",
-                  "Training the next generation of performers"
+                  "🎭 Théâtre",
+                  "💃 Danse",
+                  "🎶 Musique",
+                  "📖 Conte",
+                  "🎬 Cinéma",
+                  "👩 Leadership Féminin"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center text-foreground font-medium">
-                    <Star className="w-5 h-5 text-secondary mr-3 fill-secondary" />
+                  <li key={i} className="flex items-center text-foreground font-medium bg-white p-3 rounded-lg shadow-sm border border-border/50">
+                    <Star className="w-4 h-4 text-primary mr-3 fill-primary" />
                     {item}
                   </li>
                 ))}
               </ul>
               <Link href="/about">
                 <Button variant="link" className="text-primary p-0 h-auto font-semibold text-lg group">
-                  Learn more about us <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  Découvrir notre histoire complète <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
             </motion.div>
@@ -119,8 +123,8 @@ export default function Home() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeader 
-            title="Upcoming Events" 
-            subtitle="Join us for performances, festivals, and cultural gatherings."
+            title="Événements à venir" 
+            subtitle="Rejoignez-nous pour des spectacles, des festivals et des rencontres culturelles."
           />
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -134,7 +138,7 @@ export default function Home() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-foreground px-3 py-1 rounded-lg text-sm font-bold z-10 shadow-sm">
-                    {format(new Date(event.date), "MMM d")}
+                    {format(new Date(event.date), "d MMM", { locale: fr })}
                   </div>
                   <img 
                     src={getImageUrl(event.imageUrl)} 
@@ -149,13 +153,13 @@ export default function Home() {
                   <p className="text-muted-foreground text-sm line-clamp-2 mb-4">{event.description}</p>
                   <div className="flex items-center text-xs text-muted-foreground font-medium">
                     <Calendar className="w-4 h-4 mr-1.5" />
-                    {format(new Date(event.date), "h:mm a")} • {event.location}
+                    {format(new Date(event.date), "HH:mm", { locale: fr })} • {event.location}
                   </div>
                 </div>
               </motion.div>
             )) : (
               <div className="col-span-3 text-center py-12 text-muted-foreground bg-muted/20 rounded-2xl">
-                No upcoming events scheduled at the moment.
+                Aucun événement n'est prévu pour le moment.
               </div>
             )}
           </div>
@@ -163,7 +167,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <Link href="/events">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white rounded-full px-8">
-                View Full Calendar
+                Voir le calendrier complet
               </Button>
             </Link>
           </div>
@@ -179,12 +183,12 @@ export default function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
             <div>
-              <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">Our Portfolio</h2>
-              <p className="text-white/60 max-w-xl">Explore our latest productions and artistic collaborations.</p>
+              <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">Notre Portfolio</h2>
+              <p className="text-white/60 max-w-xl">Explorez nos dernières productions et collaborations artistiques.</p>
             </div>
             <Link href="/projects">
               <Button variant="ghost" className="text-white hover:text-primary mt-6 md:mt-0 group">
-                View All Projects <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                Voir tous les projets <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
@@ -219,7 +223,7 @@ export default function Home() {
             ))}
              {featuredProjects.length === 0 && (
                  <div className="col-span-full py-20 text-center text-white/50 border border-white/10 rounded-xl">
-                     Projects gallery coming soon.
+                     Galerie de projets bientôt disponible.
                  </div>
              )}
           </div>
@@ -230,20 +234,20 @@ export default function Home() {
       <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Ready to Experience the Magic?</h2>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Prêt à vivre la magie ?</h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-10">
-            Whether you want to attend a show, partner with us, or join a workshop, 
-            we'd love to connect with you.
+            Que vous souhaitiez assister à un spectacle, devenir partenaire ou participer à un atelier, 
+            nous serions ravis de vous rencontrer.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
              <Link href="/contact">
                <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90 font-bold px-8 py-6 rounded-full">
-                 Get in Touch
+                 Nous contacter
                </Button>
              </Link>
              <Link href="/training">
                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20 px-8 py-6 rounded-full bg-transparent">
-                 Join a Workshop
+                 Rejoindre un atelier
                </Button>
              </Link>
           </div>

@@ -6,8 +6,8 @@ export function isUnauthorizedError(error: Error): boolean {
 export function redirectToLogin(toast?: (options: { title: string; description: string; variant: string }) => void) {
   if (toast) {
     toast({
-      title: "Unauthorized",
-      description: "You are logged out. Logging in again...",
+      title: "Non autorisé",
+      description: "Vous êtes déconnecté. Reconnexion en cours...",
       variant: "destructive",
     });
   }

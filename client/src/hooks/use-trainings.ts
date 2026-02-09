@@ -1,88 +1,70 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, buildUrl, type InsertTraining } from "@shared/routes";
 import { useToast } from "@/hooks/use-toast";
 
+export interface Training {
+  id: number;
+  title: string;
+  description: string;
+  duration: string;
+  level: string;
+  imageUrl: string | null;
+}
+
+const MOCK_TRAININGS: Training[] = [
+  {
+    id: 1,
+    title: "Formation Sonorisation",
+    description: "Apprenez les bases de la sonorisation de spectacle.",
+    duration: "3 mois",
+    level: "Débutant",
+    imageUrl: "WhatsApp Image 2026-02-08 at 16.14.50.jpeg"
+  },
+  {
+    id: 2,
+    title: "Gestion Culturelle",
+    description: "Administrer et promouvoir des projets artistiques.",
+    duration: "6 mois",
+    level: "Intermédiaire",
+    imageUrl: "WhatsApp Image 2026-02-08 at 16.14.51.jpeg"
+  }
+];
+
 export function useTrainings() {
-  return useQuery({
-    queryKey: [api.trainings.list.path],
-    queryFn: async () => {
-      const res = await fetch(api.trainings.list.path);
-      if (!res.ok) throw new Error("Failed to fetch trainings");
-      return api.trainings.list.responses[200].parse(await res.json());
-    },
-  });
+  return {
+    data: MOCK_TRAININGS,
+    isLoading: false,
+    error: null
+  };
 }
 
 export function useCreateTraining() {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async (data: InsertTraining) => {
-      const res = await fetch(api.trainings.create.path, {
-        method: api.trainings.create.method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Failed to create training");
-      return api.trainings.create.responses[201].parse(await res.json());
+  return {
+    mutate: (data: any) => {
+      console.log("Mock training created:", data);
+      toast({ title: "Succès", description: "Formation créée (simulation)" });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [api.trainings.list.path] });
-      toast({ title: "Success", description: "Training created successfully" });
-    },
-    onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
-  });
+    isPending: false
+  };
 }
 
 export function useUpdateTraining() {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async ({ id, ...data }: { id: number } & Partial<InsertTraining>) => {
-      const url = buildUrl(api.trainings.update.path, { id });
-      const res = await fetch(url, {
-        method: api.trainings.update.method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Failed to update training");
-      return api.trainings.update.responses[200].parse(await res.json());
+  return {
+    mutate: ({ id, ...data }: any) => {
+      console.log("Mock training updated:", id, data);
+      toast({ title: "Succès", description: "Formation mise à jour (simulation)" });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [api.trainings.list.path] });
-      toast({ title: "Success", description: "Training updated successfully" });
-    },
-    onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
-  });
+    isPending: false
+  };
 }
 
 export function useDeleteTraining() {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async (id: number) => {
-      const url = buildUrl(api.trainings.delete.path, { id });
-      const res = await fetch(url, { 
-        method: api.trainings.delete.method,
-        credentials: "include" 
-      });
-      if (!res.ok) throw new Error("Failed to delete training");
+  return {
+    mutate: (id: number) => {
+      console.log("Mock training deleted:", id);
+      toast({ title: "Succès", description: "Formation supprimée (simulation)" });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [api.trainings.list.path] });
-      toast({ title: "Success", description: "Training deleted successfully" });
-    },
-    onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
-  });
+    isPending: false
+  };
 }

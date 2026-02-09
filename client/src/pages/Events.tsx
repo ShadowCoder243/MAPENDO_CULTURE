@@ -4,6 +4,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { useEvents } from "@/hooks/use-events";
 import { getImageUrl } from "@/lib/images";
 import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -16,8 +17,8 @@ export default function Events() {
       
       <div className="container mx-auto px-4 py-16">
         <SectionHeader 
-            title="Event Calendar" 
-            subtitle="Don't miss out on our upcoming performances and festivals." 
+            title="Calendrier des événements" 
+            subtitle="Ne manquez pas nos prochains spectacles et festivals." 
         />
 
         <div className="max-w-4xl mx-auto space-y-8">
@@ -36,7 +37,7 @@ export default function Events() {
                     >
                         {/* Date Box Mobile */}
                         <div className="md:hidden bg-primary text-white p-4 flex items-center justify-between">
-                            <span className="font-bold">{format(new Date(event.date), "MMMM d, yyyy")}</span>
+                            <span className="font-bold">{format(new Date(event.date), "d MMMM yyyy", { locale: fr })}</span>
                             <span className="text-sm bg-white/20 px-2 py-0.5 rounded">{event.category}</span>
                         </div>
 
@@ -49,8 +50,8 @@ export default function Events() {
                             />
                             {/* Desktop Date Overlay */}
                             <div className="hidden md:flex flex-col items-center justify-center absolute top-4 left-4 bg-white/95 backdrop-blur-sm w-16 h-16 rounded-xl shadow-lg text-foreground">
-                                <span className="text-xs font-bold uppercase text-muted-foreground">{format(new Date(event.date), "MMM")}</span>
-                                <span className="text-2xl font-bold text-primary font-display">{format(new Date(event.date), "dd")}</span>
+                                <span className="text-xs font-bold uppercase text-muted-foreground">{format(new Date(event.date), "MMM", { locale: fr })}</span>
+                                <span className="text-2xl font-bold text-primary font-display">{format(new Date(event.date), "dd", { locale: fr })}</span>
                             </div>
                         </div>
 
@@ -59,7 +60,7 @@ export default function Events() {
                             <div className="hidden md:block text-xs font-bold text-primary uppercase tracking-wider mb-2">{event.category}</div>
                             <h3 className="text-2xl font-bold font-display mb-3">{event.title}</h3>
                             <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
-                                <div className="flex items-center"><Clock size={16} className="mr-2" /> {format(new Date(event.date), "h:mm a")}</div>
+                                <div className="flex items-center"><Clock size={16} className="mr-2" /> {format(new Date(event.date), "HH:mm", { locale: fr })}</div>
                                 <div className="flex items-center"><MapPin size={16} className="mr-2" /> {event.location}</div>
                             </div>
                             <p className="text-muted-foreground mb-0 line-clamp-2">{event.description}</p>
@@ -68,7 +69,7 @@ export default function Events() {
                 ))
             ) : (
                 <div className="text-center py-20 bg-muted/20 rounded-2xl text-muted-foreground">
-                    No events scheduled at the moment. Check back soon!
+                    Aucun événement n'est prévu pour le moment. Revenez bientôt !
                 </div>
             )}
         </div>

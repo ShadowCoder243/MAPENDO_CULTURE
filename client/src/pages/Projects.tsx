@@ -7,13 +7,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const CATEGORIES = ["All", "Theater", "Dance", "Music", "Cinema", "Storytelling"];
+const CATEGORIES = ["Tous", "Théâtre", "Danse", "Musique", "Cinéma", "Conte"];
 
 export default function Projects() {
   const { data: projects, isLoading } = useProjects();
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("Tous");
 
-  const filteredProjects = projects?.filter(p => filter === "All" || p.category === filter) || [];
+  const filteredProjects = projects?.filter(p => filter === "Tous" || p.category === filter) || [];
 
   return (
     <div className="min-h-screen bg-background font-sans pt-20">
@@ -21,8 +21,8 @@ export default function Projects() {
       
       <div className="container mx-auto px-4 py-16">
         <SectionHeader 
-            title="Our Projects" 
-            subtitle="A showcase of our artistic productions and community initiatives." 
+            title="Nos Projets" 
+            subtitle="Une vitrine de nos productions artistiques et initiatives communautaires." 
         />
 
         {/* Filter */}
@@ -73,7 +73,7 @@ export default function Projects() {
                 ))
             ) : (
                 <div className="col-span-full text-center py-20 text-muted-foreground">
-                    No projects found in this category.
+                    Aucun projet trouvé dans cette catégorie.
                 </div>
             )}
         </div>
