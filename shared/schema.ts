@@ -5,7 +5,7 @@ import { relations } from "drizzle-orm";
 
 export * from "./models/auth";
 
-// --- Events ---
+// --- Événements ---
 export const events = pgTable("events", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -13,7 +13,7 @@ export const events = pgTable("events", {
   date: timestamp("date").notNull(),
   location: text("location").notNull(),
   imageUrl: text("image_url"),
-  category: text("category").notNull(), // Theater, Dance, Music, etc.
+  category: text("category").notNull(), // Théâtre, Danse, Musique, etc.
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -22,7 +22,7 @@ export type Event = typeof events.$inferSelect;
 export type InsertEvent = z.infer<typeof insertEventSchema>;
 export type UpdateEventRequest = Partial<InsertEvent>;
 
-// --- Projects / Portfolio ---
+// --- Projets / Portfolio ---
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -37,7 +37,7 @@ export type Project = typeof projects.$inferSelect;
 export type InsertProject = z.infer<typeof insertProjectSchema>;
 export type UpdateProjectRequest = Partial<InsertProject>;
 
-// --- Team Members ---
+// --- Membres de l'Équipe ---
 export const teamMembers = pgTable("team_members", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -52,7 +52,7 @@ export type TeamMember = typeof teamMembers.$inferSelect;
 export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
 export type UpdateTeamMemberRequest = Partial<InsertTeamMember>;
 
-// --- Blog Posts ---
+// --- Articles de Blog ---
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -66,14 +66,14 @@ export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type UpdateBlogPostRequest = Partial<InsertBlogPost>;
 
-// --- Contact Messages ---
+// --- Messages de Contact ---
 export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
-  type: text("type").notNull(), // Partnership, Press, General
+  type: text("type").notNull(), // Partenariat, Presse, Général
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -81,7 +81,7 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 
-// --- Trainings (Formations) ---
+// --- Formations ---
 export const trainings = pgTable("trainings", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),

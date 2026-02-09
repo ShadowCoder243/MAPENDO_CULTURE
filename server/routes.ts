@@ -13,14 +13,14 @@ export async function registerRoutes(
   await setupAuth(app);
   registerAuthRoutes(app);
 
-  // --- Events ---
+  // --- Événements ---
   app.get(api.events.list.path, async (req, res) => {
     const events = await storage.getEvents();
     res.json(events);
   });
   app.get(api.events.get.path, async (req, res) => {
     const event = await storage.getEvent(Number(req.params.id));
-    if (!event) return res.status(404).json({ message: "Event not found" });
+    if (!event) return res.status(404).json({ message: "Événement non trouvé" });
     res.json(event);
   });
   app.post(api.events.create.path, isAuthenticated, async (req, res) => {
@@ -37,7 +37,7 @@ export async function registerRoutes(
     try {
       const input = api.events.update.input.parse(req.body);
       const event = await storage.updateEvent(Number(req.params.id), input);
-      if (!event) return res.status(404).json({ message: "Event not found" });
+      if (!event) return res.status(404).json({ message: "Événement non trouvé" });
       res.json(event);
     } catch (err) {
       if (err instanceof z.ZodError) return res.status(400).json(err.errors);
@@ -49,7 +49,7 @@ export async function registerRoutes(
     res.status(204).send();
   });
 
-  // --- Projects ---
+  // --- Projets ---
   app.get(api.projects.list.path, async (req, res) => {
     const projects = await storage.getProjects();
     res.json(projects);
@@ -68,7 +68,7 @@ export async function registerRoutes(
     try {
       const input = api.projects.update.input.parse(req.body);
       const project = await storage.updateProject(Number(req.params.id), input);
-      if (!project) return res.status(404).json({ message: "Project not found" });
+      if (!project) return res.status(404).json({ message: "Projet non trouvé" });
       res.json(project);
     } catch (err) {
       if (err instanceof z.ZodError) return res.status(400).json(err.errors);
@@ -80,7 +80,7 @@ export async function registerRoutes(
     res.status(204).send();
   });
 
-  // --- Team Members ---
+  // --- Équipe ---
   app.get(api.teamMembers.list.path, async (req, res) => {
     const members = await storage.getTeamMembers();
     res.json(members);
@@ -99,7 +99,7 @@ export async function registerRoutes(
     try {
       const input = api.teamMembers.update.input.parse(req.body);
       const member = await storage.updateTeamMember(Number(req.params.id), input);
-      if (!member) return res.status(404).json({ message: "Member not found" });
+      if (!member) return res.status(404).json({ message: "Membre non trouvé" });
       res.json(member);
     } catch (err) {
       if (err instanceof z.ZodError) return res.status(400).json(err.errors);
@@ -111,14 +111,14 @@ export async function registerRoutes(
     res.status(204).send();
   });
 
-  // --- Blog Posts ---
+  // --- Blog ---
   app.get(api.blogPosts.list.path, async (req, res) => {
     const posts = await storage.getBlogPosts();
     res.json(posts);
   });
   app.get(api.blogPosts.get.path, async (req, res) => {
     const post = await storage.getBlogPost(Number(req.params.id));
-    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (!post) return res.status(404).json({ message: "Article non trouvé" });
     res.json(post);
   });
   app.post(api.blogPosts.create.path, isAuthenticated, async (req, res) => {
@@ -135,7 +135,7 @@ export async function registerRoutes(
     try {
       const input = api.blogPosts.update.input.parse(req.body);
       const post = await storage.updateBlogPost(Number(req.params.id), input);
-      if (!post) return res.status(404).json({ message: "Post not found" });
+      if (!post) return res.status(404).json({ message: "Article non trouvé" });
       res.json(post);
     } catch (err) {
       if (err instanceof z.ZodError) return res.status(400).json(err.errors);
@@ -163,7 +163,7 @@ export async function registerRoutes(
     res.json(messages);
   });
 
-  // --- Trainings ---
+  // --- Formations ---
   app.get(api.trainings.list.path, async (req, res) => {
     const trainings = await storage.getTrainings();
     res.json(trainings);
@@ -182,7 +182,7 @@ export async function registerRoutes(
     try {
       const input = api.trainings.update.input.parse(req.body);
       const training = await storage.updateTraining(Number(req.params.id), input);
-      if (!training) return res.status(404).json({ message: "Training not found" });
+      if (!training) return res.status(404).json({ message: "Formation non trouvée" });
       res.json(training);
     } catch (err) {
       if (err instanceof z.ZodError) return res.status(400).json(err.errors);
@@ -197,13 +197,13 @@ export async function registerRoutes(
   return httpServer;
 }
 
-// Helper to seed data
+// Helper pour semer les données
 async function seedData() {
-  const events = await storage.getEvents();
-  if (events.length === 0) {
-    console.log("Seeding data...");
+  const eventsList = await storage.getEvents();
+  if (eventsList.length === 0) {
+    console.log("Semis des données...");
     
-    // Seed Team
+    // Équipe
     await storage.createTeamMember({
       name: "Maguy Kalomba",
       role: "Directrice Artistique & Fondatrice",
@@ -211,7 +211,7 @@ async function seedData() {
       imageUrl: "/images/mr culturel/WhatsApp Image 2026-02-08 at 16.14.47.jpeg"
     });
 
-    // Seed Events
+    // Événements
     await storage.createEvent({
       title: "Festival Mapend'o 2026",
       description: "La grande célébration des arts vivants au cœur de Kinshasa.",
@@ -230,7 +230,7 @@ async function seedData() {
       imageUrl: "/images/mr culturel/WhatsApp Image 2026-02-08 at 16.14.49.jpeg"
     });
 
-    // Seed Projects
+    // Projets
     await storage.createProject({
       title: "Racines",
       description: "Une création théâtrale explorant l'identité et la mémoire.",
@@ -245,9 +245,8 @@ async function seedData() {
       imageUrl: "/images/mr culturel/WhatsApp Image 2026-02-08 at 16.14.51.jpeg"
     });
 
-    console.log("Data seeded successfully!");
+    console.log("Données semées avec succès !");
   }
 }
 
-// Call seed data (you might want to call this conditionally or in index.ts, but here works for simple setup)
 seedData().catch(console.error);
