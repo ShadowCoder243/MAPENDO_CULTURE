@@ -1,13 +1,15 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { SectionHeader } from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useCreateContactMessage } from "@/hooks/use-contact";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 
 const insertContactMessageSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -18,9 +20,6 @@ const insertContactMessageSchema = z.object({
 });
 
 type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useCreateContactMessage } from "@/hooks/use-contact";
-import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 
 export default function Contact() {
   const { mutate, isPending } = useCreateContactMessage();
